@@ -61,7 +61,7 @@ namespace CinemaWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Language,Rating,GenreId")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Name,Language,Rating,GenreId,Price")] Movie movie)
         {
             //return Ok(movie);
             if (ModelState.IsValid)
@@ -86,6 +86,8 @@ namespace CinemaWeb.Controllers
             {
                 return NotFound();
             }
+            var genres = await _context.Genres.ToListAsync();
+            ViewBag.Genres = new SelectList(genres, "Id", "Name");
             return View(movie);
         }
 
@@ -94,7 +96,7 @@ namespace CinemaWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Language,Rating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Language,Rating,GenreId, Price")] Movie movie)
         {
             if (id != movie.Id)
             {

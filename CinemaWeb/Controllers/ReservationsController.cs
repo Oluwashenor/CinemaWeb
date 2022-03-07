@@ -47,8 +47,8 @@ namespace CinemaWeb.Controllers
         // GET: Reservations/Create
         public async Task<IActionResult> Create()
         {
-            var genres = await _context.Movies.ToListAsync();
-            ViewBag.MovieId = new SelectList(genres, "Id", "Name");
+            var movies = await _context.Movies.ToListAsync();
+            ViewBag.MovieId = new SelectList(movies, "Id", "Name");
             return View();
         }
 
