@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CinemaWeb.Data;
 using CinemaWeb.Models;
 using CinemaWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CinemaWeb.Controllers
 {
@@ -45,6 +46,7 @@ namespace CinemaWeb.Controllers
         }
 
         // GET: Movies/Create
+        [Authorize]
         public IActionResult Create()
         {
             var genres = _context.Genres.ToList();
@@ -59,6 +61,7 @@ namespace CinemaWeb.Controllers
         // POST: Movies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Language,Rating,GenreId,Price")] Movie movie)
@@ -74,6 +77,7 @@ namespace CinemaWeb.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,6 +98,7 @@ namespace CinemaWeb.Controllers
         // POST: Movies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Language,Rating,GenreId, Price")] Movie movie)
@@ -127,6 +132,7 @@ namespace CinemaWeb.Controllers
         }
 
         // GET: Movies/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,6 +151,7 @@ namespace CinemaWeb.Controllers
         }
 
         // POST: Movies/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -155,6 +162,7 @@ namespace CinemaWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool MovieExists(int id)
         {
             return _context.Movies.Any(e => e.Id == id);
