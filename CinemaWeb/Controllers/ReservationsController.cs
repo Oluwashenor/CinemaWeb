@@ -23,7 +23,7 @@ namespace CinemaWeb.Controllers
         public async Task<IActionResult> Index()
         {
            
-            return View(await _context.Reservation.ToListAsync());
+            return View(await _context.Reservations.ToListAsync());
         }
 
         // GET: Reservations/Details/5
@@ -34,7 +34,7 @@ namespace CinemaWeb.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation
+            var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
@@ -76,11 +76,13 @@ namespace CinemaWeb.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
             if (reservation == null)
             {
                 return NotFound();
             }
+            var movies = await _context.Movies.ToListAsync();
+            ViewBag.MovieId = new SelectList(movies, "Id", "Name");
             return View(reservation);
         }
 
@@ -127,7 +129,7 @@ namespace CinemaWeb.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation
+            var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
@@ -142,15 +144,15 @@ namespace CinemaWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
-            _context.Reservation.Remove(reservation);
+            var reservation = await _context.Reservations.FindAsync(id);
+            _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservation.Any(e => e.Id == id);
+            return _context.Reservations.Any(e => e.Id == id);
         }
     }
 }

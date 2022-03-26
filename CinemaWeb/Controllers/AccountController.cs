@@ -71,8 +71,8 @@ namespace CinemaWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent:false, lockoutOnFailure:false);
+            
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure:false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index",  "Home");

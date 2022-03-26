@@ -15,7 +15,9 @@
         <form asp-action="Create">
             <div class="form-group">
                 <label asp-for="MovieId" class="control-label"></label>
-                <select id="movie" asp-for="MovieId" class="form-control" asp-items="@ViewBag.MovieId"></select>
+                <select id="movie" asp-for="MovieId" class="form-control" asp-items="@ViewBag.MovieId">
+                    <option selected disabled> -- Select Movie --</option>
+                </select>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -68,7 +70,7 @@
               var price = $("#Price").val();
               $.ajax({
                   method: "GET",
-                  url: baseUrl+"/api/moviesapi/" + movieId,
+                  url: baseUrl+"/api/movies/" + movieId,
                   success: function (response) {
                       $("#Price").val(response.price);
                       $("#Quantity").val(1);
